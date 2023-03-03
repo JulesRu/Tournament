@@ -7,19 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GameTest {
 
-    Player player1 = new Player(1, "Flambeau", 37);
-    Player player2 = new Player(23, "father Brown", 65);
-    Player player3 = new Player(4, "Sid", 37);
-
     @Test
     public void roundIfFirstPlayerWins() {
 
         Game game = new Game();
 
-        game.register(player2);
-        game.register(player3);
+        game.register("father Brown", 65);
+        game.register("Flambeau", 37);
 
-        assertEquals(1, game.round("father Brown", "Sid"));
+        assertEquals(1, game.round("father Brown", "Flambeau"));
 
     }
 
@@ -27,8 +23,8 @@ public class GameTest {
     public void roundIfSecondPLayerWins() {
 
         Game game = new Game();
-        game.register(player1);
-        game.register(player2);
+        game.register("Flambeau", 37);
+        game.register("father Brown", 65);
 
         assertEquals(2, game.round("Flambeau", "father Brown"));
 
@@ -39,8 +35,8 @@ public class GameTest {
 
         Game game = new Game();
 
-        game.register(player1);
-        game.register(player3);
+        game.register("Flambeau", 37);
+        game.register("Sid", 37);
 
         assertEquals(0, game.round("Flambeau", "Sid"));
 
@@ -51,16 +47,16 @@ public class GameTest {
 
         Game game = new Game();
 
-        game.register(player1);
+        game.register("Flambeau", 37);
 
-        assertThrows(NotRegisteredException.class, () -> game.round("Flambeau", "Mrs McCarthy"));
+        assertThrows(NotRegisteredException.class, () -> game.round("Mrs McCarthy", "Flambeau"));
     }
 
     @Test
     public void roundIfSecondNotRegistered() {
 
         Game game = new Game();
-        game.register(player3);
+        game.register("Sid", 37);
 
         assertThrows(NotRegisteredException.class, () -> game.round("Sid", "Inspector Mallory"));
     }
